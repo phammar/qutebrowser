@@ -912,9 +912,12 @@ class TabBarStyle(QCommonStyle):
         if metric in [QStyle.PM_TabBarTabShiftHorizontal,
                       QStyle.PM_TabBarTabShiftVertical,
                       QStyle.PM_TabBarTabHSpace,
-                      QStyle.PM_TabBarTabVSpace,
-                      QStyle.PM_TabBarScrollButtonWidth]:
+                      QStyle.PM_TabBarTabVSpace]:
             return 0
+        # Show tabbar scroll buttons
+        elif metric in [QStyle.PM_TabBarScrollButtonWidth]:
+            # log.misc.info(f"pixelMetric: : {metric} option: {option}, widget: {widget}")
+            return self._style.pixelMetric(metric, option, widget)
         else:
             return self._style.pixelMetric(metric, option, widget)
 
@@ -929,6 +932,7 @@ class TabBarStyle(QCommonStyle):
         Return:
             A QRect.
         """
+
         if sr == QStyle.SE_TabBarTabText:
             layouts = self._tab_layout(opt)
             if layouts is None:
